@@ -1,0 +1,111 @@
+# CareerQuest Hub - Feature Specification Document
+
+**Version:** 1.0
+**Date:** May 23, 2025
+
+## 1. Introduction
+
+This document provides detailed specifications for the features of the CareerQuest Hub platform, building upon the concepts outlined in the Architecture Overview and initial Feature Outline. It covers the functionalities of the WordPress website, the CareerQuest mobile game application, and the associated messaging channel bots (Telegram/WhatsApp). The focus is on delivering a unified, engaging, and valuable experience for the target audience of recent graduates.
+
+## 2. General Requirements
+
+*   **Target Audience Focus:** All features should be designed with recent graduates in mind, addressing their specific needs and challenges in the job and scholarship search process.
+*   **Unified Branding:** Consistent branding (logo, color scheme, tone of voice) must be applied across the website, mobile app, and bot communications.
+*   **Responsiveness:** The WordPress website must be fully responsive and provide an optimal viewing experience on desktops, tablets, and mobile devices.
+*   **Accessibility:** Adherence to WCAG (Web Content Accessibility Guidelines) standards is required for the website to ensure usability for people with disabilities.
+
+## 3. WordPress Website Features
+
+### 3.1. User Authentication and Profile Management
+
+*   **User Registration:** Recent graduates can create an account using an email address and password. The registration process should be simple and quick. Upon registration, users will have a profile created.
+*   **User Login:** Registered users can log in securely using their credentials. Password recovery functionality must be available.
+*   **User Profile:** Users can view and edit their profile information, which includes basic details (name, contact info), educational background, career interests, skills, and preferences for job/scholarship alerts. The profile page will also display the user's gamification status (points, badges, achievements) synced from the CareerQuest app and indicate any features unlocked through game progress.
+*   **Saved Items:** Users can save specific job listings and scholarships to their profile for later review or application.
+
+### 3.2. Job and Scholarship Listings
+
+*   **Listing Display:** The website will display job and scholarship opportunities in a clear, searchable, and filterable format. Each listing will show key details like title, organization, location, description, requirements, deadline, and an application link/method.
+*   **Search and Filtering:** Users must be able to search listings by keywords (title, company, skills) and filter by criteria such as location, industry, job type (full-time, internship), scholarship type, field of study, etc.
+*   **Listing Management (Admin):** An administrative interface will allow platform managers to add, edit, and remove listings. Functionality for bulk import or integration with external sources (via API or feeds) should be considered for sourcing content efficiently, aligning with the 'combination' approach confirmed earlier.
+
+### 3.3. Career Resources
+
+*   **Content Hub:** A dedicated section of the website will host career guides, articles, tips, and resources relevant to recent graduates. Content should be organized into categories (e.g., Resume Writing, Interview Skills, Networking, Industry Insights).
+*   **Searchable Content:** Resources should be easily searchable by keyword or topic.
+*   **SEO Optimization:** All resource content must be optimized for search engines to attract organic traffic.
+
+### 3.4. Interactive Tools
+
+*   **Resume Builder:** An integrated tool allowing users to create professional resumes using various templates. Users should be able to input their information section by section (contact, summary, experience, education, skills) and export the final resume as a PDF. Data entered might pre-fill or sync with their main user profile.
+*   **Scholarship Matcher:** A tool that suggests relevant scholarships based on the user's profile data (e.g., field of study, GPA, location, affiliations). Users should be able to review matched scholarships and save them.
+
+### 3.5. Community Forum
+
+*   **Discussion Boards:** A forum (e.g., using bbPress) where users can create topics, post replies, ask questions, and share experiences related to job searching, scholarships, and career development.
+*   **Moderation:** Tools for administrators and moderators to manage forum content, users, and enforce community guidelines.
+*   **Profile Integration:** Forum activity should be linked to user profiles.
+
+### 3.6. Gamification Integration & Feature Unlocking
+
+*   **Status Display:** User profiles and potentially other areas of the site will display the user's points, badges, and achievements earned in the CareerQuest mobile app (data synced via API).
+*   **Dynamic Feature Access:** The website backend will check a user's gamification metadata (retrieved from WordPress user meta) when they attempt to access certain features or content. If the user meets the required achievement criteria (e.g., specific badge earned, minimum point threshold reached), access will be granted. Examples:
+    *   **Early Access:** Users with a specific achievement might see newly posted job listings 24 hours before other users.
+    *   **Premium Content:** Certain in-depth career guides or templates might only be accessible after reaching a certain level in the game.
+    *   **Profile Enhancements:** Cosmetic badges or profile customization options could be unlocked.
+
+## 4. Mobile Game App (CareerQuest) Features
+
+### 4.1. Onboarding and Authentication
+
+*   **Login/Registration:** Users log in using their existing CareerQuest Hub (WordPress) account credentials via an API call. A link or prompt for registration on the main website should be provided if the user doesn't have an account.
+*   **Tutorial:** A brief tutorial explaining the game mechanics, tasks, and rewards system.
+
+### 4.2. Core Gameplay Loop
+
+*   **Task System:** The app presents users with various tasks related to career development and platform engagement. Examples:
+    *   View X number of job/scholarship listings (potentially filtered by preference).
+    *   Complete a quiz based on a specific career guide (content potentially summarized in-app or linked to the website).
+    *   Update profile section (e.g., add skills).
+    *   Share a listing or guide (via native share options).
+    *   Visit the community forum (via deep link).
+*   **Task Completion Tracking:** The app tracks task completion and communicates this back to the WordPress backend via API calls.
+
+### 4.3. Rewards and Progression
+
+*   **Points System:** Users earn points for completing tasks. Points contribute to an overall level or progress bar.
+*   **Badges/Achievements:** Specific milestones or challenging tasks award users virtual badges or achievements (e.g., "First Application Viewed," "Resume Master," "Interview Ready").
+*   **State Synchronization:** The app fetches the user's current points, badges, and achievement status from WordPress user meta via the API upon login and periodically. It sends updates back to WordPress via the API immediately upon task completion and reward granting.
+*   **Unlocking Website Features:** When an achievement that unlocks a website feature is earned, the app makes an API call to update the corresponding flag in the user's WordPress metadata, effectively granting them access on the website.
+
+### 4.4. Website Integration
+
+*   **Deep Linking:** The app uses deep links to direct users to specific job listings, scholarship details, career guides, or forum sections on the mobile-responsive WordPress website to complete certain tasks or explore further.
+*   **Driving Traffic:** The game mechanics are designed to encourage regular visits back to the core WordPress platform.
+
+## 5. Messaging Bot Features (Telegram/WhatsApp)
+
+### 5.1. User Linking and Preferences
+
+*   **Account Linking:** Users need to link their messaging account (Telegram/WhatsApp) to their CareerQuest Hub profile. This could be initiated via a command (e.g., `/start` or `/link`) that provides a unique link to the website where the user logs in to authorize the bot connection. This authorization step allows the bot to securely access user preferences and send personalized alerts via the API.
+*   **Preference Management:** Users can potentially manage basic alert preferences (frequency, types of listings) via commands within the chat interface, which would update their profile on WordPress via API calls.
+
+### 5.2. Personalized Alerts
+
+*   **Content Fetching:** Bots periodically query the WordPress REST API to find new job and scholarship listings that match the linked user's saved preferences.
+*   **Notification Delivery:** Relevant new listings or digests are sent directly to the user via Telegram or WhatsApp message.
+*   **Content Snippets:** Alerts should contain key information (title, company, location) and a direct link to the full listing on the WordPress website.
+
+### 5.3. Interactive Engagement
+
+*   **Content Pushing:** Bots can proactively send career tips, links to new guides, or community highlights based on user interests or general schedules.
+*   **Simple Interactions:** Bots can facilitate simple interactions like polls (e.g., "What type of content would you like to see more of?") or basic Q&A where predefined answers or links to relevant resources are provided. Results or interactions might optionally be logged or used to refine user preferences via API calls.
+
+## 6. Integration Points Summary
+
+*   **Authentication:** WordPress API (OAuth 2.0 / Application Passwords) for app/bot login.
+*   **User Data:** WordPress API for reading/writing user profile data, preferences, and gamification state (user meta).
+*   **Content Retrieval:** WordPress API for fetching listings, guides, etc., by app/bots.
+*   **Feature Unlocking:** Game app updates user meta via API; Website reads user meta directly.
+*   **Notifications:** Bots query API for new content; Push notifications for the app might require a separate service integrated with WordPress hooks.
+*   **Deep Linking:** Standard URL schemes used by app/bots to link into the website.
